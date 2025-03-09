@@ -10,6 +10,7 @@ import {
   MainContainer,
 } from "./shared/common-components";
 import Header from "./shared/header";
+import Login from "./pages/login";
 
 interface layoutProps {
   children: ReactNode;
@@ -31,7 +32,7 @@ function App() {
     <Layout>
       <Router>
         <Routes>
-          <Route path="/login" element={<>Login</>} />
+          <Route path="/login" element={<Login />} />
           <Route path="/" element={<>home</>} />
         </Routes>
       </Router>

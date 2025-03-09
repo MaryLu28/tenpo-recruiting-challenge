@@ -1,4 +1,4 @@
-export const colors = {
+export const Colors = {
   primary: "#03ff94",
   tenpoLogo: "#6aff9a",
   HighlightPrimary: "#6affc1",
