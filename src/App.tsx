@@ -4,15 +4,18 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "@fontsource/open-sans";
 import "./App.css";
 
+import AuthProvider from "./shared/auth/auth-provider";
+import AuthRequired from "./shared/auth/auth-required";
+
+import Login from "./pages/login";
+
 import {
   BaseContainer,
   BaseContent,
   MainContainer,
 } from "./shared/common-components";
 import Header from "./shared/header";
-import Login from "./pages/login";
-import AuthProvider from "./shared/auth/auth-provider";
-import AuthRequired from "./shared/auth/auth-required";
+import Footer from "./shared/footer";
 
 interface layoutProps {
   children: ReactNode;
@@ -25,6 +28,7 @@ const Layout = ({ children }: layoutProps) => {
       <BaseContainer>
         <BaseContent>{children}</BaseContent>
       </BaseContainer>
+      <Footer />
     </MainContainer>
   );
 };
@@ -36,7 +40,7 @@ function App() {
         <Router>
           <Routes>
             <Route path="/login" element={<Login />} />
-            <Route path="/" element={<AuthRequired>home</AuthRequired>} />
+            <Route path="/" element={<AuthRequired>Home</AuthRequired>} />
           </Routes>
         </Router>
       </Layout>

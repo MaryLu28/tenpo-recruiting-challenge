@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { tablet } from "./breakpoints";
 import { Colors } from "./colors";
 
 export const MainContainer = styled.div`
@@ -11,6 +12,13 @@ export const BaseContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+  /* 100vh - header - footer */
+  height: calc(100vh - 65px - 80px);
+
+  @media (${tablet}) {
+    /* 100vh - header - footer */
+    height: calc(100vh - 70px - 80px);
+  }
 `;
 
 export const BaseContent = styled.div`
