@@ -50,22 +50,20 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const signIn = async (data: AuthData) => {
-    setTimeout(() => {
-      if (data.email && data.password) {
-        const fakeToken = "fake-jwt-token-123456";
-        const userData = { id: 1, email: data.email };
+    if (data.email && data.password) {
+      const fakeToken = "fake-jwt-token-123456";
+      const userData = { id: 1, email: data.email };
 
-        setToken(fakeToken);
-        setUser(userData);
+      setToken(fakeToken);
+      setUser(userData);
 
-        localStorage.setItem("token", fakeToken);
-        localStorage.setItem("user", JSON.stringify(userData));
+      localStorage.setItem("token", fakeToken);
+      localStorage.setItem("user", JSON.stringify(userData));
 
-        console.log("✅ Login exitoso - Token:", fakeToken);
-      } else {
-        console.error("❌ Usuario o contraseña incorrectos.");
-      }
-    }, 1000);
+      console.log("✅ Login exitoso - Token:", fakeToken);
+    } else {
+      console.error("❌ Usuario o contraseña incorrectos.");
+    }
   };
 
   const signOut = () => {

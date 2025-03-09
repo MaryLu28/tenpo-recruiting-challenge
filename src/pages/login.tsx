@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 
 import { useAuth } from "../shared/auth/auth-provider";
 import { Colors } from "../shared/colors";
+import Loader from "../shared/loader";
 
 const Container = styled.div`
   display: flex;
@@ -102,33 +103,72 @@ const Form = styled.form`
 
 const Login = () => {
   const navigate = useNavigate();
-
   const auth = useAuth();
-
   const [loading, setLoading] = useState(false);
 
+  const isValidEmail = (email: string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
   const handleSubmit = async (event: React.SyntheticEvent<HTMLFormElement>) => {
-    setLoading(true);
     event.preventDefault();
+    setLoading(true);
+    console.log("loading true");
+
     const form = event.currentTarget;
     const formElements = form.elements as typeof form.elements & {
       email: { value: string };
       password: { value: string };
     };
 
-    console.log(formElements.email.value, formElements.password.value);
+    if (formElements.email.value === "" || formElements.password.value === "") {
+      Swal.fire(
+        "❌ Todos los campos son obligatorios.",
+        "Completa los campos",
+        "error"
+      );
 
-    try {
-      await auth.signIn({
-        email: formElements.email.value,
-        password: formElements.password.value,
-      });
-      navigate("/", { replace: true });
-    } catch (error) {
-      Swal.fire("¡Ups! Algo salió mal", "Vuelve a intentar", "error");
+      setLoading(false);
+      return;
     }
 
-    setLoading(false);
+    if (!isValidEmail(formElements.email.value)) {
+      Swal.fire(
+        "❌ El email no es válido.",
+        "Ingresa un correo válido",
+        "error"
+      );
+
+      setLoading(false);
+      return;
+    }
+
+    if (formElements.password.value.length < 8) {
+      Swal.fire(
+        "❌ La contraseña es muy corta.",
+        "Ingresa una contraseña de al menos 8 caracteres",
+        "error"
+      );
+
+      setLoading(false);
+      return;
+    }
+
+    try {
+      setTimeout(() => {
+        auth.signIn({
+          email: formElements.email.value,
+          password: formElements.password.value,
+        });
+
+        navigate("/", { replace: true });
+
+        setLoading(false);
+      }, 5000);
+    } catch (error) {
+      Swal.fire("¡Ups! Algo salió mal", "Vuelve a intentar", "error");
+      setLoading(false);
+    }
   };
 
   if (auth.token && auth.user) {
@@ -136,35 +176,37 @@ const Login = () => {
   }
 
   return (
-    <Container>
-      {loading && <p>Cargando...</p>}
-      <Title>
-        <b>Hola!,</b> Inicia sesión para comenzar
-      </Title>
+    <>
+      {loading && <Loader />}
+      <Container>
+        <Title>
+          <b>Hola!,</b> Inicia sesión para comenzar
+        </Title>
 
-      <Form onSubmit={handleSubmit}>
-        <FormGroup>
-          <Label htmlFor="email">Correo electrónico</Label>
-          <Input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="
+        <Form onSubmit={handleSubmit}>
+          <FormGroup>
+            <Label htmlFor="email">Correo electrónico</Label>
+            <Input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="
             Ingresa tu correo electrónico"
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label htmlFor="password">Contraseña</Label>
-          <Input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Ingresa tu contraseña"
-          />
-        </FormGroup>
-        <SubmitBtn type="submit">Iniciar sesión</SubmitBtn>
-      </Form>
-    </Container>
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label htmlFor="password">Contraseña</Label>
+            <Input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Ingresa tu contraseña"
+            />
+          </FormGroup>
+          <SubmitBtn type="submit">Iniciar sesión</SubmitBtn>
+        </Form>
+      </Container>
+    </>
   );
 };
 
