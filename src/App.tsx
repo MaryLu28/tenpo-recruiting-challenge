@@ -11,6 +11,8 @@ import {
 } from "./shared/common-components";
 import Header from "./shared/header";
 import Login from "./pages/login";
+import AuthProvider from "./shared/auth/auth-provider";
+import AuthRequired from "./shared/auth/auth-required";
 
 interface layoutProps {
   children: ReactNode;
@@ -29,14 +31,16 @@ const Layout = ({ children }: layoutProps) => {
 
 function App() {
   return (
-    <Layout>
-      <Router>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/" element={<>home</>} />
-        </Routes>
-      </Router>
-    </Layout>
+    <AuthProvider>
+      <Layout>
+        <Router>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<AuthRequired>home</AuthRequired>} />
+          </Routes>
+        </Router>
+      </Layout>
+    </AuthProvider>
   );
 }
 

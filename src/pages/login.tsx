@@ -1,4 +1,9 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import Swal from "sweetalert2";
+
+import { useAuth } from "../shared/auth/auth-provider";
 import { Colors } from "../shared/colors";
 
 const Container = styled.div`
@@ -70,6 +75,21 @@ const FormGroup = styled.div`
   width: 100%;
 `;
 
+const SubmitBtn = styled.button`
+  margin-top: 30px;
+  width: 100%;
+  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  color: ${Colors.black};
+  background-color: ${Colors.primary};
+  border: none;
+  border-radius: 8px;
+  height: 40px;
+  cursor: pointer;
+`;
+
 const Form = styled.form`
   display: flex;
   flex-direction: column;
@@ -81,13 +101,48 @@ const Form = styled.form`
 `;
 
 const Login = () => {
+  const navigate = useNavigate();
+
+  const auth = useAuth();
+
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (event: React.SyntheticEvent<HTMLFormElement>) => {
+    setLoading(true);
+    event.preventDefault();
+    const form = event.currentTarget;
+    const formElements = form.elements as typeof form.elements & {
+      email: { value: string };
+      password: { value: string };
+    };
+
+    console.log(formElements.email.value, formElements.password.value);
+
+    try {
+      await auth.signIn({
+        email: formElements.email.value,
+        password: formElements.password.value,
+      });
+      navigate("/", { replace: true });
+    } catch (error) {
+      Swal.fire("¡Ups! Algo salió mal", "Vuelve a intentar", "error");
+    }
+
+    setLoading(false);
+  };
+
+  if (auth.token && auth.user) {
+    navigate("/", { replace: true });
+  }
+
   return (
     <Container>
+      {loading && <p>Cargando...</p>}
       <Title>
         <b>Hola!,</b> Inicia sesión para comenzar
       </Title>
 
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <FormGroup>
           <Label htmlFor="email">Correo electrónico</Label>
           <Input
@@ -107,6 +162,7 @@ const Login = () => {
             placeholder="Ingresa tu contraseña"
           />
         </FormGroup>
+        <SubmitBtn type="submit">Iniciar sesión</SubmitBtn>
       </Form>
     </Container>
   );
