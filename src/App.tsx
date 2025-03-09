@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+import "@fontsource/open-sans";
 import "./App.css";
 
 import {
@@ -8,6 +9,7 @@ import {
   BaseContent,
   MainContainer,
 } from "./shared/common-components";
+import Header from "./shared/header";
 
 interface layoutProps {
   children: ReactNode;
@@ -16,6 +18,7 @@ interface layoutProps {
 const Layout = ({ children }: layoutProps) => {
   return (
     <MainContainer>
+      <Header />
       <BaseContainer>
         <BaseContent>{children}</BaseContent>
       </BaseContainer>

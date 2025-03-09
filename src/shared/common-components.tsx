@@ -1,7 +1,9 @@
 import styled from "styled-components";
+import { colors } from "./colors";
 
 export const MainContainer = styled.div`
   min-height: 100vh;
+  background-color: ${colors.black};
 `;
 
 export const BaseContainer = styled.div`
