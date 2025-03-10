@@ -20,7 +20,6 @@ const Container = styled.div`
 
   @media (${tablet}) {
     height: 70px;
-    padding: 0 50px;
   }
 `;
 
