@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Swal from "sweetalert2";
@@ -104,7 +104,6 @@ const Login = () => {
   const handleSubmit = async (event: React.SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
-    console.log("loading true");
 
     const form = event.currentTarget;
     const formElements = form.elements as typeof form.elements & {
@@ -114,7 +113,7 @@ const Login = () => {
 
     if (formElements.email.value === "" || formElements.password.value === "") {
       Swal.fire(
-        "❌ Todos los campos son obligatorios.",
+        "Todos los campos son obligatorios.",
         "Completa los campos",
         "error"
       );
@@ -124,11 +123,7 @@ const Login = () => {
     }
 
     if (!isValidEmail(formElements.email.value)) {
-      Swal.fire(
-        "❌ El email no es válido.",
-        "Ingresa un correo válido",
-        "error"
-      );
+      Swal.fire("El email no es válido.", "Ingresa un correo válido", "error");
 
       setLoading(false);
       return;
@@ -136,7 +131,7 @@ const Login = () => {
 
     if (formElements.password.value.length < 8) {
       Swal.fire(
-        "❌ La contraseña es muy corta.",
+        "La contraseña es muy corta.",
         "Ingresa una contraseña de al menos 8 caracteres",
         "error"
       );
@@ -162,9 +157,11 @@ const Login = () => {
     }
   };
 
-  if (auth.token && auth.user) {
-    navigate("/", { replace: true });
-  }
+  useEffect(() => {
+    if (auth.token && auth.user) {
+      navigate("/", { replace: true });
+    }
+  }, [auth.token, auth.user, navigate]);
 
   return (
     <>

@@ -5,6 +5,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import Swal from "sweetalert2";
 
 export interface AuthContextType {
   token: string | null;
@@ -59,10 +60,12 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
       localStorage.setItem("token", fakeToken);
       localStorage.setItem("user", JSON.stringify(userData));
-
-      console.log("✅ Login exitoso - Token:", fakeToken);
     } else {
-      console.error("❌ Usuario o contraseña incorrectos.");
+      Swal.fire(
+        "Usuario o contraseña incorrectos.",
+        "Vuelve a intentar",
+        "error"
+      );
     }
   };
 
