@@ -1,15 +1,17 @@
 import axios from "axios";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Colors } from "../shared/colors";
-import { BeatLoader } from "react-spinners";
 import styled from "styled-components";
-import { useAuth } from "../shared/auth/auth-provider";
 
-const LoaderContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-bottom: 50px;
+import { useAuth } from "../shared/auth/auth-provider";
+import { Colors } from "../shared/colors";
+
+import GoTopButton from "../components/go-top-button";
+import { DotsLoader } from "../components/loaders";
+
+const Title = styled.h1`
+  color: ${Colors.primary};
+  text-align: center;
+  font-size: 32px;
 `;
 
 const CharactersContainer = styled.ul`
@@ -115,10 +117,9 @@ const Home = () => {
     return () => observer.disconnect();
   }, [getCharacters]);
 
-  console.log(characters);
-
   return (
     <>
+      <Title>Personas Marvel</Title>
       <CharactersContainer>
         {characters.map((character) => (
           <CharacterCard key={character.id}>
@@ -135,11 +136,8 @@ const Home = () => {
         ref={observerRef}
         style={{ height: 50, background: "transparent" }}
       />
-      {loading && (
-        <LoaderContainer>
-          <BeatLoader color={Colors.primary} />
-        </LoaderContainer>
-      )}
+      {loading && <DotsLoader />}
+      <GoTopButton />
     </>
   );
 };
