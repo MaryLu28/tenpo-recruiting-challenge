@@ -9,6 +9,8 @@ import { desktop, tablet } from "../breakpoints";
 import { Colors } from "../colors";
 
 const Container = styled.div`
+  margin: 0 auto;
+  max-width: 1140px;
   width: 100%;
   height: 65px;
   padding: 0 28px;

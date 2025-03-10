@@ -7,7 +7,12 @@ const Container = styled.div`
   height: 80px;
   padding: 0 28px;
   display: flex;
+  justify-content: center;
   align-items: center;
+`;
+const Content = styled.div`
+  max-width: 1140px;
+  width: 100%;
 `;
 
 const Text = styled.p`
@@ -18,9 +23,11 @@ const Text = styled.p`
 const Footer = () => {
   return (
     <Container>
-      <Text>
-        Realizado por <b>María Lourdes Garcia Flórez</b>
-      </Text>
+      <Content>
+        <Text>
+          Realizado por <b>María Lourdes Garcia Flórez</b>
+        </Text>
+      </Content>
     </Container>
   );
 };
