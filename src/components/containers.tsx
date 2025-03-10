@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { tablet } from "./breakpoints";
-import { Colors } from "./colors";
+import { tablet } from "../shared/breakpoints";
+import { Colors } from "../shared/colors";
 
 export const MainContainer = styled.div`
   min-height: 100vh;

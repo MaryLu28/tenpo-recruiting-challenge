@@ -5,7 +5,8 @@ import Swal from "sweetalert2";
 
 import { useAuth } from "../shared/auth/auth-provider";
 import { Colors } from "../shared/colors";
-import Loader from "../shared/loader";
+import { FullLoader } from "../components/loaders";
+import { PrimaryButton } from "../components/button";
 
 const Container = styled.div`
   display: flex;
@@ -76,19 +77,9 @@ const FormGroup = styled.div`
   width: 100%;
 `;
 
-const SubmitBtn = styled.button`
+const SubmitBtn = styled(PrimaryButton)`
   margin-top: 30px;
   width: 100%;
-  padding: 8px 16px;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 24px;
-  color: ${Colors.black};
-  background-color: ${Colors.primary};
-  border: none;
-  border-radius: 8px;
-  height: 40px;
-  cursor: pointer;
 `;
 
 const Form = styled.form`
@@ -177,7 +168,7 @@ const Login = () => {
 
   return (
     <>
-      {loading && <Loader />}
+      {loading && <FullLoader />}
       <Container>
         <Title>
           <b>Hola!,</b> Inicia sesión para comenzar

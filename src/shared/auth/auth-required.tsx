@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 
 import { useAuth } from "./auth-provider";
-import Loader from "../loader";
+import { FullLoader } from "../../components/loaders";
 
 const AuthRequired = ({ children }: { children: ReactNode }) => {
   const auth = useAuth();
@@ -12,7 +12,7 @@ const AuthRequired = ({ children }: { children: ReactNode }) => {
   }
 
   if (auth.token && !auth.user) {
-    return <Loader />;
+    return <FullLoader />;
   }
 
   return <>{children}</>;

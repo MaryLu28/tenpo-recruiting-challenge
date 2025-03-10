@@ -1,5 +1,5 @@
-import { FadeLoader } from "react-spinners";
-import { Colors } from "./colors";
+import { BeatLoader, FadeLoader } from "react-spinners";
+import { Colors } from "../shared/colors";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -21,13 +21,20 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+`;
+
+const FadeContainer = styled(Container)`
   margin-left: -2px;
 `;
 
-const Loader = () => {
+const DotsContainer = styled(Container)`
+  padding-bottom: 50px;
+`;
+
+export const FullLoader = () => {
   return (
     <Wrapper>
-      <Container>
+      <FadeContainer>
         <FadeLoader
           color={Colors.primary}
           height={30}
@@ -37,9 +44,15 @@ const Loader = () => {
           speedMultiplier={1}
           width={10}
         />
-      </Container>
+      </FadeContainer>
     </Wrapper>
   );
 };
 
-export default Loader;
+export const DotsLoader = () => {
+  return (
+    <DotsContainer>
+      <BeatLoader color={Colors.primary} />
+    </DotsContainer>
+  );
+};

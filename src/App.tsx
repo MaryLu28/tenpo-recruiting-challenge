@@ -14,7 +14,7 @@ import {
   BaseContainer,
   BaseContent,
   MainContainer,
-} from "./shared/common-components";
+} from "./components/containers";
 import Header from "./shared/header";
 import Footer from "./shared/footer";
 
