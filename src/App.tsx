@@ -7,6 +7,7 @@ import "./App.css";
 import AuthProvider from "./shared/auth/auth-provider";
 import AuthRequired from "./shared/auth/auth-required";
 
+import Home from "./pages/home";
 import Login from "./pages/login";
 
 import {
@@ -40,7 +41,14 @@ function App() {
         <Router>
           <Routes>
             <Route path="/login" element={<Login />} />
-            <Route path="/" element={<AuthRequired>Home</AuthRequired>} />
+            <Route
+              path="/"
+              element={
+                <AuthRequired>
+                  <Home />
+                </AuthRequired>
+              }
+            />
           </Routes>
         </Router>
       </Layout>

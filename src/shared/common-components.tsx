@@ -13,11 +13,11 @@ export const BaseContainer = styled.div`
   display: flex;
   justify-content: center;
   /* 100vh - header - footer */
-  height: calc(100vh - 65px - 80px);
+  min-height: calc(100vh - 65px - 80px);
 
   @media (${tablet}) {
     /* 100vh - header - footer */
-    height: calc(100vh - 70px - 80px);
+    min-height: calc(100vh - 70px - 80px);
   }
 `;
 
