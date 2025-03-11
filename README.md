@@ -1,46 +1,61 @@
-# Getting Started with Create React App
+# Desafío Técnico Tenpo
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este repositorio contiene la solución a la prueba técnica para el proceso de selección de talento en Tenpo. Consulta el [enunciado del desafío](./challenge-banco-de-talentos-2025.pdf) para obtener más detalles.
 
-## Available Scripts
+## Requisitos del Entorno:
 
-In the project directory, you can run:
+- Node.js: Se recomienda la versión 18 o superior para asegurar la compatibilidad.
 
-### `npm start`
+## Tecnologías y Librerías Utilizadas
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Frontend:
+  - React 19 (con TypeScript)
+  - React Scripts
+  - Styled Components
+  - React Router DOM
+  - Axios
+- Librerías Adicionales:
+  - React Spinner: Para indicadores de carga.
+  - Sweet Alert 2: Para notificaciones y alertas.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Instalación y Configuración
 
-### `npm test`
+1. **Instalación de Dependencias:**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+   ```bash
+   npm install
+   ```
 
-### `npm run build`
+2. **Configuración de Variables de Entorno:**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+   - Crea un archivo .env en la raíz del proyecto.
+   - Agrega la variable _REACT_APP_MARVEL_KEY_ con tu API Key de Marvel (enviada en el email de entrega o También se puede generar gratis en https://developer.marvel.com/).
+   - Por motivos de seguridad, la API Key no se incluye directamente en el repositorio. Se entiende que, por seguridad, las "variables de ambiente" del lado del cliente no son entornos secretos, pero por simplicidad del proyecto y no agregar un backend, se utiliza para el API Key.
+   - Consulta el archivo de ejemplo [.env-example](./.env-example) para la estructura.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. **Ejecución del Proyecto:**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   ```bash
+   npm start
+   ```
 
-### `npm run eject`
+   - La aplicación estará disponible abriendo el browser en [http://localhost:3000](http://localhost:3000)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Detalles de Implementación
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Gestión de Autenticación con Contexto
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- Se implementó un contexto de React con un provider (AuthProvider) para gestionar el estado de autenticación de los usuarios (login/logout).
+- Con el _AuthProvider_ disponible para la mayoría de la aplicación, el proyecto puede extenderse para futuras funcionalidades relacionadas con la autenticación, como el cambio de contraseña.
+- El componente _AuthRequired_ protege las rutas privadas, redirigiendo a los usuarios no autenticados a la página de inicio de sesión.
+- Con esta arquitectura, se facilita la gestión de rutas publicas y privadas de forma simple.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Visualización Optimizada de la Lista en la Home
 
-## Learn More
+- Se implementó una carga bajo demanda de los datos, solicitando lotes de 20 elementos a la API de Marvel (Personajes de Marvel Comics).
+- Se utiliza un scroll infinito para cargar más elementos a medida que el usuario se desplaza, mejorando el rendimiento inicial al reducir los elementos cargados al principio.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Propuesta para la Mejora de Llamadas al Backend
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Implementación de cache a diferentes niveles de localidad. Los mas comunes siendo locales al browser, como lo son LocalStorage API y Service Worker API; o entre el servidor de origen y el cliente, como son los CDNs (Content Delivery Networks).
+- De esta forma, las siguientes veces que el usuario requiera la misma información, se obtiene del navegador o CDN, mejorando la velocidad de la aplicación, y evitando solicitudes redundantes al servidor de origen.
